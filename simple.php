@@ -1,15 +1,15 @@
 
 <?php
-require_once('database.php');
+require_once('database.1.php');
 
- $state='CA';
- $query = "SELECT firstName, lastName, city FROM customers WHERE state = ? ORDER BY lastName";
+ $version= 2.0;
+ $query = "SELECT productCode,name FROM products where version = ?";
 
  $stmt = $db->prepare($query);
- $stmt->bind_param('s', $state);
+ $stmt->bind_param('s', $version);
  $stmt->execute();
 $stmt->store_result();
- $stmt->bind_result($firstName, $lastName, $city);
+ $stmt->bind_result($productCode, $name);
 
 ?>
 
@@ -27,12 +27,12 @@ $stmt->store_result();
     <div id="page">
 
     <div id="header">
-        <h1>Customer list</h1>
+        <h1>Product list</h1>
     </div>
 
     <div id="main">
 
-        <h1>Customer List</h1>
+        <h1>Product List</h1>
 
        
 
@@ -40,18 +40,16 @@ $stmt->store_result();
             <!-- display a table of products -->
             <table>
                 <tr>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>City</th>
+                    <th>ProductCode</th>
+                    <th>ProductName</th>
+
 
                 </tr>
                 <?php while($stmt->fetch()): ?>
 
                 <tr>
-                    <td><?php  echo $firstName; ?></td>
-                    <td><?php  echo $lastName; ?></td>
-                    <td><?php echo $city; ?></td>
-
+                    <td><?php  echo $productCode; ?></td>
+                    <td><?php  echo $name; ?></td>
                     
                     
                 </tr>
